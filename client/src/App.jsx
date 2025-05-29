@@ -7,7 +7,6 @@ import Sidebar from './components/Sidebar'
 import Player from './components/Player'
 
 import Home from './pages/Home'
-import Search from './pages/Search'
 import Playlist from './pages/Playlist'
 import PlaylistDetail from './pages/PlaylistDetail';
 import Profile from './pages/Profile'
@@ -52,7 +51,6 @@ function App() {
                     <main className="flex-1 bg-gray-800 overflow-y-auto">
                       <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/search" element={<Search />} />
                         <Route path="/playlist" element={<Playlist />} />
                         <Route path="/playlists/:id" element={<PlaylistDetail />} />
                         <Route path="/profile" element={<Profile />} />

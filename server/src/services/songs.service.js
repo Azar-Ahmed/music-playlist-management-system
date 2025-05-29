@@ -8,22 +8,18 @@ export const getAllSongsService = async () => {
   return songs;
 };
 
-export const addSongService = async (songData, file) => {
-  const { playlistId, spotifyId, title, artist, album } = songData;
-
-  console.log(playlistId)
-  if (!file) throw new CustomError("Song cover image is required", 400);
-
+export const addSongService = async (songData) => {
+  const { playlistId, spotifyId, title, artist, album, image } = songData;
+console.log(image)
   const playlist = await Playlist.findById(playlistId);
   if (!playlist) throw new CustomError("Playlist not found", 404);
 
-  const { secure_url } = await uploadImage(file);
 
   let song = await Song.findOne({ spotifyId });
   if (!song) {
     song = await Song.create({
       spotifyId,
-      image: secure_url,
+      image,
       title,
       artist,
       album,

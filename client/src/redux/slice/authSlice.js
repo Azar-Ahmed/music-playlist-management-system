@@ -56,16 +56,22 @@ export const login = createAsyncThunk(
 // Logout
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
+    const token = getState().auth.token; // get token from Redux
+
     try {
-      await axios.get(`${API_BASE_URL}/signout`, { withCredentials: true });
+      await axios.get(`${API_BASE_URL}/signout`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true, // only needed if server sets or clears cookies
+      });
       return true;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Logout failed');
     }
   }
 );
-
 // Update Profile
 export const updateProfile = createAsyncThunk(
   'auth/updateProfile',

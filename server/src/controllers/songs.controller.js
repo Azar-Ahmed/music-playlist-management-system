@@ -6,16 +6,14 @@ import {
 } from '../services/songs.service.js';
 
 // @desc    Get all songs
-// @route   GET /api/songs
 export const getAllSongs = asyncHandler(async (req, res) => {
   const data = await getAllSongsService();
   res.status(200).json(data);
 });
 
 // @desc    Add a new songs
-// @route   POST /api/songs
 export const addSongToPlaylist = asyncHandler(async (req, res) => {
-  const data = await addSongService(req.body, req.files?.image);
+  const data = await addSongService(req.body);
   res.status(201).json({
     message: 'Song added to playlist successfully',
     playlist: data,
@@ -23,7 +21,6 @@ export const addSongToPlaylist = asyncHandler(async (req, res) => {
 });
 
 // @desc    Remove a song
-// @route   POST /api/songs/remove
 export const removeSongFromPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, songId } = req.body;
 
