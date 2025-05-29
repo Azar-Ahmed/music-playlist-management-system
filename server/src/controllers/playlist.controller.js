@@ -8,14 +8,12 @@ import {
 } from '../services/playlist.service.js';
 
 // @desc    Get all playlist
-// @route   GET /api/playlist
 export const getAllPlaylist = asyncHandler(async (req, res) => {
   const data = await getAllPlaylistService();
   res.status(200).json(data);
 });
 
 // @desc    Add a new playlist
-// @route   POST /api/playlist
 export const addPlaylist = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const data = await addPlaylistService(req.body, userId, req.files?.image);
@@ -23,7 +21,6 @@ export const addPlaylist = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update a playlist
-// @route   PUT /api/playlist/:id
 export const updatePlaylist = asyncHandler(async (req, res) => {
   const data = await updatePlaylistService(
     req.params.id,
@@ -34,14 +31,12 @@ export const updatePlaylist = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete a playlist
-// @route   DELETE /api/playlist/:id
 export const deletePlaylist = asyncHandler(async (req, res) => {
   const data = await deletePlaylistService(req.params.id);
   res.status(200).json(data);
 });
 
 // @desc    Get single playlist details
-// @route   GET /api/playlist/:id
 export const getPlaylistDetails = asyncHandler(async (req, res) => {
   const data = await getPlaylistDetailService(req.params.id);
   res.status(200).json(data);
