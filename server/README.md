@@ -1,6 +1,6 @@
-# 🛒 Product Management Backend
+# 🛒 Music Playlists Management Backend
 
-This is a robust **Node.js + Express.js** backend API designed for an e-commerce product management system. It features **user authentication**, **profile management**, **secure password handling**, **image uploads**, and **complete product CRUD operations** with filtering.
+This is a robust **Node.js + Express.js** backend API designed for an music management system. It features **user authentication**, **profile management**, **secure password handling**, **image uploads**, and **complete playlist CRUD operations**.
 
 ---
 
@@ -96,16 +96,25 @@ project-root/
 
 ---
 
-## 🛍️ Product Routes
+## 🛍️ playlist Routes
 
 | Method | Route             | Access     | Description               |
 |--------|-------------------|------------|---------------------------|
-| POST   | `/add`            | Admin      | Add a new product         |
-| PUT    | `/update/:id`     | Admin      | Update product by ID      |
-| DELETE | `/delete/:id`     | Admin      | Delete product by ID      |
-| GET    | `/`               | Public     | Get all products          |
-| GET    | `/filter`         | Public     | Get filtered products     |
-| GET    | `/:id`            | Public     | Get product details       |
+| POST   | `/add`            | Authenticated      | Add a new playlist         |
+| PUT    | `/update/:id`     | Authenticated      | Update playlist by ID      |
+| DELETE | `/delete/:id`     | Authenticated      | Delete playlist by ID      |
+| GET    | `/`               | Authenticated     | Get all playlists          |
+| GET    | `/:id`            | Authenticated     | Get playlist details       |
+
+---
+
+## 🛍️ Songs Routes
+
+| Method | Route             | Access     | Description               |
+|--------|-------------------|------------|---------------------------|
+| POST   | `/add`            | Authenticated      | Add song to playlist         |
+| POST   | `/remove`         | Authenticated      | Remove song to playlist         |
+
 
 ---
 
@@ -124,30 +133,39 @@ project-root/
 
 ---
 
-## 📦 Product Model Schema
+## 📦 Playlist Model Schema
+
+```js
+ {
+    image: { type: String, required: true, trim: true },
+    name: { type: String, required: true, unique: true, trim: true },
+    description: { type: String, required: true },
+    userId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      required: true, 
+      ref: 'User' 
+    },
+    songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }], // <-- many songs here
+  },
+```
+## 📦 Song Model Schema
 
 ```js
 {
-  image:        { type: String, required: true },
-  product_name: { type: String, required: true },
-  desc:         { type: String, required: true },
-  mrp:          { type: Number, required: true },
-  salesPrice:   { type: Number, required: true },
-  colors:       { type: String },
-  ratings:      { type: Number, default: 0, min: 0, max: 5 },
-  product_type: { type: String, enum: ['Mens', 'Womans', 'Boy', 'Girl', 'Baby'], required: true },
-  categories:   { type: String, enum: ['Shirts', 'T-shirts', 'Jeans', 'Dresses', 'Footwear'], required: true },
-  brands:       { type: String, required: true },
-  totalStock:   { type: Number, default: 0 }
+   spotifyId: { type: String, required: true, unique: true, trim: true }, // to avoid duplicates
+    image: { type: String, trim: true },
+    title: { type: String, required: true, trim: true },
+    artist: { type: String, required: true, trim: true },
+    album: { type: String, required: true, trim: true },
+  
 }
-```
 
+--
 ---
 
 ## 🔐 Middleware
 
 - **`isAuthenticated`** – Validates JWT token.
-- **`isAuthorized`** – Checks if user has admin privileges.
 - **`validate(schema)`** – Validates request body using Joi schema.
 
 ---
@@ -173,7 +191,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 Then visit:
 
 ```
-http://localhost:5000/api-docs
+http://localhost:5001/api-docs
 ```
 
 ---

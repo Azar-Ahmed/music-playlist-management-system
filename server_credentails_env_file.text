@@ -1,0 +1,9 @@
+PORT=5001
+MONGO_URI=mongodb://localhost:27017/music_playlist_management_system
+JWT_SECRET=music_playlist_management_system
+
+NODE_ENV=development
+
+CLOUDINARY_CLOUD_NAME=ds5qzuxwc
+CLOUDINARY_API_KEY= 258413183822575
+CLOUDINARY_API_SECRET=RZiuCN3fUfMus__mfkssPNt6ALQ
